@@ -1,0 +1,101 @@
+.no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.datepicker {
+    background-color: #fc6f53;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 20px;
+    max-width: 260px;
+}
+
+.datepicker > table > tbody {
+    font-weight: 600;
+}
+
+.datepicker th {
+    font-weight: 400;
+    color: #b64331;
+    text-align: center;
+    font-size: 80%;
+}
+
+.datepicker th.dp-active {
+    font-weight: 700;
+}
+
+.datepicker td > span {
+    line-height: 24px;
+    width: 24px;
+    text-align: center;
+    display: block;
+}
+
+.datepicker td, .datepicker th {
+    padding: 4px;
+}
+
+.datepicker td > span.dp-disabled, .datepicker td > span.dp-secondary {
+    color: #fdab9f;
+}
+
+.datepicker td > span.dp-today {
+    border-radius: 100%;
+    background-color: #b64331;
+    font-weight: 700;
+}
+
+.datepicker td > span.dp-active {
+    border-radius: 100%;
+    background-color: #454545;
+    font-weight: 700;
+    transition: background .5s;
+    -webkit-transition: background .5s;
+    -moz-transition: background .5s;
+    -ms-transition: background .5s;
+    -o-transition: background .5s;
+}
+
+.datepicker .arrow {
+    width: 28px;
+    font-size: 120%;
+}
+
+.dp-header {
+    line-height: 120%;
+}
+
+.hand {
+    cursor: pointer;
+}
+
+.grass .datepicker {
+    background-color: #a0d468;
+}
+
+.grass .datepicker td > span.dp-today {
+    background-color: #688e41;
+}
+
+.grass .datepicker th {
+    color: #688e41;
+}
+
+.grass .datepicker td > span.dp-disabled, .grass .datepicker td > span.dp-secondary {
+    color: #ddeccf;
+}
+
+h3.bittersweet {
+    color: #b64331;
+    font-weight: 200;
+}
+
+h3.grass {
+    color: #688e41;
+    font-weight: 200;
+}

@@ -1,0 +1,27 @@
+<div class="block datepicker no-select">
+    <div class="text-center dp-header">
+        <div class="pull-left arrow"><i class="icon-left-open hand" ng-click="changeMonth(-1)" ng-show="allowPrevMonth"><</i>&nbsp;
+        </div>
+        <div class="pull-right arrow">&nbsp;<i class="icon-right-open hand" ng-click="changeMonth(1)"
+                                               ng-show="allowNextMonth">></i></div>
+        <strong>{{curMonth}} {{curYear}}</strong>
+    </div>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th ng-repeat="label in labels"
+                ng-class="{'dp-active': isSelectedDayOfWeek(label.dow), 'hand': multiSelect}"
+                ng-click="toggleDayOfWeek(label.dow, isSelectedDayOfWeek(label.dow))">{{label.day}}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="dates in rows">
+            <td ng-repeat="d in dates">
+                <span ng-click="setDate(d)" class="{{d.className}}" ng-class="{'dp-active': isSelected(d.date)}">{{d.label}}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

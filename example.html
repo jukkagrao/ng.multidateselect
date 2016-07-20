@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular MultiDateSelect</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+    <!--<script src="http://code.angularjs.org/1.2.14/i18n/angular-locale_ru-ru.js"></script>-->
+    <script src="js/ng.multidateselct.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/datepicker.css">
+    <script>
+        angular.module('myApp', ['ng.multidateselect']).controller('DatepickerDemoCtrl', function ($scope) {
+            $scope.minDate = '2016-04-10';
+            $scope.maxDate = '2017-07-30';
+        });
+    </script>
+</head>
+<body ng-app="myApp">
+<div ng-controller="DatepickerDemoCtrl" class="container">
+    <div multi-date-select ng-model="date"
+         min-date="minDate" max-date="maxDate" multi-select="true" starting-day="1" class="col-xs-4"></div>
+
+
+    {{date}}
+</div>
+
+
+</body>
+</html>
