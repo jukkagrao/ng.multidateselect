@@ -2,6 +2,6 @@
 
 Angular MultiDateSelect directive
 
-See an example.html
+See example.html
 
 ![screenshot](http://2no.co/2Bdz.gif)
