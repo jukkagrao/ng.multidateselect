@@ -15,24 +15,24 @@ See example.html
 
 2. Insert this lines in your HTML code:
 
-```    
-<script src="js/ng.multidateselct.js"></script>
-<link rel="stylesheet" href="css/datepicker.css">
-```
+    ```    
+    <script src="js/ng.multidateselct.js"></script>
+    <link rel="stylesheet" href="css/datepicker.css">
+    ```
 
 3. add module dependency to your App:
 
-```
-angular.module('myApp', ['ng.multidateselect'])
-```
+    ```
+    angular.module('myApp', ['ng.multidateselect'])
+    ```
 
 4. then you can use directive:
 
-```
-<div multi-date-select
-         ng-model="date"
-         min-date="minDate" 
-         max-date="maxDate" 
-         multi-select="true"
-         starting-day="1"></div> <!--  1 - Monday, 0 - Sunday -->
-```
+    ```
+    <div multi-date-select
+             ng-model="date"
+             min-date="minDate" 
+             max-date="maxDate" 
+             multi-select="true"
+             starting-day="1"></div> <!--  1 - Monday, 0 - Sunday -->
+    ```
