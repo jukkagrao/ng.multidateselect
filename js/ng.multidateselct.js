@@ -8,7 +8,7 @@
 
     angular.module('ng.multidateselect', [])
 
-        .directive('multiDateSelect', ['$locale', 'dateFilter', function ($locale, dateFilter) {
+        .directive('multiDateSelect', ['$locale', '$filter', function ($locale, $filter) {
             return {
                 require: 'ngModel',
                 scope: {
@@ -28,7 +28,7 @@
                         currentDate = new Date(),
                         multiSelect = !!scope.multiSelect,
                         startingDay = scope.startingDay || 0,
-                        today = dateFilter(new Date(), 'yyyy-MM-dd');
+                        today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
                     var months = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"];
@@ -77,7 +77,11 @@
                     }
 
                     function makeDate(date, format, isSecondary) {
-                        return {date: date, label: dateFilter(date, format), className: getClass(date, isSecondary)};
+                        return {
+                            date: date,
+                            label: $filter('date')(date, format),
+                            className: getClass(date, isSecondary)
+                        };
                     }
 
                     function getClass(date, isSecondary) {
@@ -122,10 +126,13 @@
 
                         for (var i = 0; i < numDates; i++) {
                             var dt = new Date(days[i]);
-                            days[i] = makeDate(dateFilter(dt, 'yyyy-MM-dd'), 'd', dt.getMonth() !== month);
+                            days[i] = makeDate($filter('date')(dt, 'yyyy-MM-dd'), 'd', dt.getMonth() !== month);
                         }
                         for (var j = 0; j < 7; j++) {
-                            labels[j] = {day: dateFilter(days[j].date, 'EEE'), dow: new Date(days[j].date).getDay()};
+                            labels[j] = {
+                                day: $filter('date')(days[j].date, 'EEE'),
+                                dow: new Date(days[j].date).getDay()
+                            };
                         }
 
 
@@ -143,7 +150,7 @@
                     };
 
                     scope.setDate = function (dateObj) {
-                        if (isDateDisabled(dateObj)) return;
+                        if (isDateDisabled(dateObj) || angular.equals({}, dateObj)) return;
                         if (multiSelect && !angular.isArray(scope.date)) scope.date = [];
 
                         if (multiSelect && indexOf.call(scope.date, dateObj.date) == -1)
@@ -158,9 +165,9 @@
 
                     ngModel.$render = function () {
                         if ((!angular.isArray(ngModel.$modelValue))
-                            && (date = ngModel.$modelValue) && (indexOf.call(disabledDates, date) === -1)) {
-                            scope.currentDate = currentDate = stringToDate(date);
-                        } else if (date) {
+                            && (scope.date = ngModel.$modelValue) && (indexOf.call(disabledDates, scope.date) === -1)) {
+                            scope.currentDate = currentDate = stringToDate(scope.date);
+                        } else if (scope.date) {
                             // if the initial date set by the user is in the disabled dates list, unset it
                             scope.setDate({});
                         }
@@ -211,7 +218,7 @@
                             new Date(min.setDate(min.getDate() + diffDate));
 
                         while (firstDay <= maxDate) {
-                            if (indexOf.call(scope.date, dateFilter(firstDay, 'yyyy-MM-dd')) == -1) return false;
+                            if (indexOf.call(scope.date, $filter('date')(firstDay, 'yyyy-MM-dd')) == -1) return false;
                             var newDate = firstDay.setDate(firstDay.getDate() + 7);
                             firstDay = new Date(newDate);
                         }
@@ -230,7 +237,7 @@
 
                         var dts = [];
                         while (firstDay <= maxDate) {
-                            dts.push(dateFilter(firstDay, 'yyyy-MM-dd'));
+                            dts.push($filter('date')(firstDay, 'yyyy-MM-dd'));
                             firstDay = new Date(firstDay.setDate(firstDay.getDate() + 7));
                         }
 
