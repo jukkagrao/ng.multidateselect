@@ -16,7 +16,7 @@
                     minDate: '=',
                     maxDate: '=',
                     disabledDates: '=',
-                    multiSelect: '=',
+                    maxLimit: '=',
                     startingDay: '='
                 },
                 templateUrl: './tpl/datepicker.html',
@@ -26,16 +26,16 @@
                         maxDate = scope.maxDate && stringToDate(scope.maxDate),
                         disabledDates = scope.disabledDates || [],
                         currentDate = new Date(),
-                        multiSelect = !!scope.multiSelect,
+                        maxLimit = parseInt(scope.maxLimit),
                         startingDay = scope.startingDay || 0,
                         today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
                     var months = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"];
 
-                    scope.date = (typeof scope.date == 'undefined' && multiSelect) ? [] : scope.date;
+                    scope.date = (typeof scope.date == 'undefined' && maxLimit != 1) ? [] : scope.date;
                     scope.isSelected = function (d) {
-                        if (multiSelect) {
+                        if (maxLimit != 1) {
                             var flag = 0;
                             angular.forEach(scope.date, function (dt) {
                                 if (d == dt) flag = 1;
@@ -45,6 +45,10 @@
                             return (d == scope.date);
                         }
                     };
+
+                    function canAddDate(){
+                        return (maxLimit == 0 || angular.isArray(scope.date) && maxLimit > scope.date.length);
+                    }
 
                     function getDates(startDate, n) {
                         var dates = new Array(n);
@@ -151,15 +155,15 @@
 
                     scope.setDate = function (dateObj) {
                         if (isDateDisabled(dateObj) || angular.equals({}, dateObj)) return;
-                        if (multiSelect && !angular.isArray(scope.date)) scope.date = [];
+                        if (maxLimit != 1 && !angular.isArray(scope.date)) scope.date = [];
 
-                        if (multiSelect && indexOf.call(scope.date, dateObj.date) == -1)
+                        if (canAddDate() && indexOf.call(scope.date, dateObj.date) == -1)
                             scope.date.push(dateObj.date);
-                        else if (!multiSelect)
+                        else if (maxLimit == 1)
                             ngModel.$setViewValue(dateObj.date);
                         else {
                             var position = indexOf.call(scope.date, dateObj.date);
-                            scope.date.splice(position, 1);
+                            if(position != -1) scope.date.splice(position, 1);
                         }
                     };
 
@@ -190,15 +194,15 @@
                     }
 
                     scope.addDates = function (dts) {
-                        if (!multiSelect || !angular.isArray(dts)) return;
+                        if (maxLimit == 1  || !angular.isArray(dts)) return;
                         if (!angular.isArray(scope.date)) scope.date = [];
                         angular.forEach(dts, function (date) {
-                            if (indexOf.call(scope.date, date) == -1) scope.date.push(date);
+                            if (canAddDate() && indexOf.call(scope.date, date) == -1) scope.date.push(date);
                         });
                     };
 
                     scope.removeDates = function (dts) {
-                        if (!multiSelect || !angular.isArray(dts)) return;
+                        if (maxLimit == 1 || !angular.isArray(dts)) return;
                         if (!angular.isArray(scope.date)) scope.date = [];
                         angular.forEach(dts, function (date) {
                             var position = indexOf.call(scope.date, date);
@@ -210,7 +214,7 @@
                     scope.firstDow = minDate.getDay();
                     scope.isSelectedDayOfWeek = function (dow) {
 
-                        if (!multiSelect) return false;
+                        if (maxLimit != 0) return;
 
                         var min = angular.copy(minDate);
                         var diffDate = dow > scope.firstDow ? dow - scope.firstDow : 7 - (scope.firstDow - dow);
@@ -228,7 +232,7 @@
 
                     scope.toggleDayOfWeek = function (dow, active) {
 
-                        if (!multiSelect) return;
+                        if (maxLimit != 0) return;
 
                         var min = angular.copy(minDate);
                         var diffDate = dow > scope.firstDow ? dow - scope.firstDow : 7 - (scope.firstDow - dow);

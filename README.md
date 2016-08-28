@@ -3,7 +3,7 @@
 Angular MultiDateSelect directive
 
 With this datepicker you will be able to select several dates from dynamic calendar. 
-It's possible to pick up all Mondays, Tuesdays, etc. of a month by clicking on day name.
+It's possible to pick up all Mondays, Tuesdays, etc. of a month by clicking on day name (it currently works with unlimited maxLimit only).
 
 See example.html
 
@@ -33,6 +33,6 @@ See example.html
              ng-model="date"
              min-date="minDate" 
              max-date="maxDate" 
-             multi-select="true"
+             max-limit="0" <!-- 0 - unlimited, 1,2,3, etc. - select certain number of dates -->
              starting-day="1"></div> <!--  1 - Monday, 0 - Sunday -->
     ```

@@ -11,7 +11,7 @@
         <thead>
         <tr>
             <th ng-repeat="label in labels"
-                ng-class="{'dp-active': isSelectedDayOfWeek(label.dow), 'hand': multiSelect}"
+                ng-class="{'dp-active': isSelectedDayOfWeek(label.dow), 'hand': maxLimit == 0}"
                 ng-click="toggleDayOfWeek(label.dow, isSelectedDayOfWeek(label.dow))">{{label.day}}
             </th>
         </tr>

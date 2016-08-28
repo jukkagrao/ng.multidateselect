@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="css/datepicker.css">
     <script>
         angular.module('myApp', ['ng.multidateselect']).controller('DatepickerDemoCtrl', function ($scope) {
-            $scope.minDate = '2016-04-10';
+            let m = new Date();
+            $scope.minDate = m.getFullYear() +"-"+ ("0" + (m.getMonth()+1)).slice(-2) +"-01";
             $scope.maxDate = '2017-07-30';
         });
     </script>
@@ -21,7 +22,7 @@
 
 <div ng-controller="DatepickerDemoCtrl" class="container">
     <div multi-date-select ng-model="date"
-         min-date="minDate" max-date="maxDate" multi-select="true" starting-day="1" class="col-xs-4"></div>
+         min-date="minDate" max-date="maxDate" multi-select="true" starting-day="1" max-limit="0" class="col-xs-4"></div>
 
 
     {{date}}
